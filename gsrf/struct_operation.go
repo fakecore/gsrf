@@ -45,8 +45,11 @@ func getPureFiledName(name string) string {
 	return nlist[len(nlist)-1]
 }
 
+//GetInstanceFromFiledName
+//@param src: struct pointer
+//@param fieldName:member variable name
 func GetInstanceFromFiledName(src interface{}, fieldName string) any {
-	s := reflect.ValueOf(src).FieldByName(fieldName).Interface()
+	s := reflect.ValueOf(src).FieldByName(fieldName).Elem().Interface()
 	return s
 }
 
