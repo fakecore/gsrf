@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9ec70eb0-a027-4efe-abb3-f5f821a60b24" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/gsrf/struct_operation.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gsrf/struct_operation_test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gsrf/struct_operation.go" beforeDir="false" afterPath="$PROJECT_DIR$/gsrf/struct_operation.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gsrf/struct_operation_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/gsrf/struct_operation_test.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,8 +40,17 @@
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.watchers.conflict.with.on.save.actions.check.performed" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/gsrf" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Test.struct_operation_test.go">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="gsrf" />
       <working_directory value="$PROJECT_DIR$" />
@@ -47,6 +58,18 @@
       <kind value="FILE" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestExecMemberVariableMethod in github.com/fakecore/gsrf/gsrf" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="gsrf" />
+      <working_directory value="$PROJECT_DIR$/gsrf" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="github.com/fakecore/gsrf/gsrf" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <pattern value="^\QTestExecMemberVariableMethod\E$" />
       <method v="2" />
     </configuration>
     <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
@@ -59,6 +82,22 @@
       <framework value="gotest" />
       <method v="2" />
     </configuration>
+    <configuration name="struct_operation_test.go" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="gsrf" />
+      <working_directory value="$PROJECT_DIR$/gsrf" />
+      <root_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/gsrf/struct_operation_test.go" />
+      <framework value="gotest" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Test.struct_operation_test.go" />
+        <item itemvalue="Go Test.TestExecMemberVariableMethod in github.com/fakecore/gsrf/gsrf" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TypeScriptGeneratedFilesManager">

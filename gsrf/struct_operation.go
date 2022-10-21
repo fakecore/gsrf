@@ -1,28 +1,53 @@
 package gsrf
 
 import (
-	"container/list"
 	"errors"
 	"fmt"
 	"reflect"
+	"strings"
 )
 
-func StructName(src interface{}) (name string) {
+func GetStructName(src interface{}) (name string) {
 	return reflect.TypeOf(src).Elem().Name()
 }
 
 // StructFunctionList must pass the struct pointer to get all the methods of src struct
-func StructFunctionList(src interface{}) (fnList []list.List) {
+func GetStructFunctionList(src interface{}) (fnList []string) {
 	typeList := reflect.TypeOf(src)
-	fmt.Println(typeList.NumMethod())
-	for i := 0; i < (typeList.NumMethod()); i++ {
-		fmt.Println(typeList.Method(i).Name)
+	count := typeList.NumMethod()
+	for i := 0; i < count; i++ {
+		fnList = append(fnList, typeList.Method(i).Name)
 	}
-	return nil
+	return fnList
 }
 
-func StructPropertyList(src interface{}) (fnList []list.List) {
-	return nil
+func GetStructPropertyList(src interface{}) (fnList []string) {
+	typeList := reflect.TypeOf(src)
+	count := typeList.NumField()
+	for i := 0; i < count; i++ {
+		fnList = append(fnList, typeList.Field(i).Name)
+	}
+	return fnList
+}
+
+func GetStructPropertyListWithType(src interface{}, propertyType string) (fieldList []string) {
+	typeList := reflect.TypeOf(src)
+	count := typeList.NumField()
+	for i := 0; i < count; i++ {
+		if getPureFiledName(typeList.Field(i).Type.String()) == propertyType {
+			fieldList = append(fieldList, typeList.Field(i).Name)
+		}
+	}
+	return fieldList
+}
+func getPureFiledName(name string) string {
+	nlist := strings.Split(name, ".")
+	return nlist[len(nlist)-1]
+}
+
+func GetInstanceFromFiledName(src interface{}, fieldName string) any {
+	s := reflect.ValueOf(src).FieldByName(fieldName).Interface()
+	return s
 }
 
 //ExecMethod
@@ -42,17 +67,13 @@ func ExecMethod(src interface{}, fnName string, args ...interface{}) (err error)
 	for _, c := range args {
 		params = append(params, reflect.ValueOf(c))
 	}
-	fnCount := reflect.TypeOf(fn).NumMethod()
+	fnCount := fn.Type.NumIn() - 1
 	if fnCount != len(params) {
 		err = errors.New(fmt.Sprintf("param count error,target:%d,now:%d\n", fnCount, len(params)))
 		return
 	}
 	reflect.ValueOf(src).MethodByName(fnName).Call(params)
 	return nil
-}
-
-func CallFunc(src interface{}, fnName string) {
-	reflect.ValueOf(&src).MethodByName(fnName).Call([]reflect.Value{})
 }
 
 // StructCopy all action is shallow copy
