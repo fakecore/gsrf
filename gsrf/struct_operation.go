@@ -12,6 +12,7 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
+	"strings"
 )
 
 func GetStructName(src interface{}) (name string) {
@@ -49,12 +50,51 @@ func GetStructFieldListWithType(src interface{}, fieldType string) (fieldList []
 	return fieldList
 }
 
-//GetFieldInstanceByName
+// GetFiledWholePackageName
+// example
+// type Base struct {
+// 	  Member pack.pack2.ss
+// }
+// base := Base{}
+// name :=  GetFiledWholePackageName(base.Member)
+// name == "pack.pack2.ss"
+func GetFiledWholePackageName(src interface{}) string {
+	return reflect.TypeOf(src).Name()
+}
+
+// GetFieldInstanceByWholePackageName
 //@param src: struct pointer
 //@param fieldName:member variable name
-func GetFieldInstanceByName(src interface{}, fieldName string) any {
+// example
+// type Base struct {
+// 	  Member pack.pack2.ss
+// }
+// using GetFieldInstanceByName(Base{},"pack.pack2.ss")
+func GetFieldInstanceByWholePackageName(src interface{}, fieldName string) any {
 	s := reflect.ValueOf(src).FieldByName(fieldName).Elem().Interface()
 	return s
+}
+
+//GetFieldInstanceByName
+// example
+// type Base struct {
+// 	  Member pack.pack2.ss
+// }
+// using GetFieldInstanceByName(Base{},"ss")
+func GetFieldInstanceByName(src interface{}, propertyType string) (fieldList []string) {
+	typeList := reflect.TypeOf(src)
+	count := typeList.NumField()
+	for i := 0; i < count; i++ {
+		if getPureFiledName(typeList.Field(i).Type.String()) == propertyType {
+			fieldList = append(fieldList, typeList.Field(i).Name)
+		}
+	}
+	return fieldList
+}
+
+func getPureFiledName(name string) string {
+	nlist := strings.Split(name, ".")
+	return nlist[len(nlist)-1]
 }
 
 //ExecMethod

@@ -124,12 +124,8 @@ func TestExecMemberVariableMethod(t *testing.T) {
 		t.Error(ers)
 	}
 	for _, c := range plist {
-		instance, err := GetFieldInstanceByName(finalExec, c)
-		if err != nil {
-			t.Error(err)
-			continue
-		}
-		err = ExecMethod(instance, "Hi")
+		instance := GetFieldInstanceByName(finalExec, c)
+		err := ExecMethod(instance, "Hi")
 		if err != nil {
 			t.Error(err)
 		}
