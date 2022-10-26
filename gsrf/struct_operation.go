@@ -52,12 +52,9 @@ func GetStructFieldListWithType(src interface{}, fieldType string) (fieldList []
 //GetFieldInstanceByName
 //@param src: struct pointer
 //@param fieldName:member variable name
-func GetFieldInstanceByName(src interface{}, fieldName string) (any, error) {
-	if reflect.TypeOf(src).Kind() != reflect.Pointer {
-		return nil, errors.New("src must be instance rather than Pointer")
-	}
+func GetFieldInstanceByName(src interface{}, fieldName string) any {
 	s := reflect.ValueOf(src).FieldByName(fieldName).Elem().Interface()
-	return s, nil
+	return s
 }
 
 //ExecMethod
