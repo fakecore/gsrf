@@ -39,7 +39,15 @@ func GetStructFiledList(src interface{}) (fieldList []string) {
 	return fieldList
 }
 
-func GetStructFieldListWithType(src interface{}, fieldType string) (fieldList []string) {
+// GetStructFieldListWithFullType
+//@param src: struct pointer
+//@param fieldName:member variable name
+// example
+// type Base struct {
+// 	  Member pack.pack2.ss
+// }
+// using GetStructFieldListWithFullType(Base{},"pack.pack2.ss")
+func GetStructFieldListWithFullType(src interface{}, fieldType string) (fieldList []string) {
 	typeList := reflect.TypeOf(src)
 	count := typeList.NumField()
 	for i := 0; i < count; i++ {
@@ -50,38 +58,13 @@ func GetStructFieldListWithType(src interface{}, fieldType string) (fieldList []
 	return fieldList
 }
 
-// GetFiledWholePackageName
+//GetStructFieldListWithType
 // example
 // type Base struct {
 // 	  Member pack.pack2.ss
 // }
-// base := Base{}
-// name :=  GetFiledWholePackageName(base.Member)
-// name == "pack.pack2.ss"
-func GetFiledWholePackageName(src interface{}) string {
-	return reflect.TypeOf(src).Name()
-}
-
-// GetFieldInstanceByWholePackageName
-//@param src: struct pointer
-//@param fieldName:member variable name
-// example
-// type Base struct {
-// 	  Member pack.pack2.ss
-// }
-// using GetFieldInstanceByName(Base{},"pack.pack2.ss")
-func GetFieldInstanceByWholePackageName(src interface{}, fieldName string) any {
-	s := reflect.ValueOf(src).FieldByName(fieldName).Elem().Interface()
-	return s
-}
-
-//GetFieldInstanceByName
-// example
-// type Base struct {
-// 	  Member pack.pack2.ss
-// }
-// using GetFieldInstanceByName(Base{},"ss")
-func GetFieldInstanceByName(src interface{}, propertyType string) (fieldList []string) {
+// using GetStructFieldListWithType(Base{},"ss")
+func GetStructFieldListWithType(src interface{}, propertyType string) (fieldList []string) {
 	typeList := reflect.TypeOf(src)
 	count := typeList.NumField()
 	for i := 0; i < count; i++ {
@@ -95,6 +78,23 @@ func GetFieldInstanceByName(src interface{}, propertyType string) (fieldList []s
 func getPureFiledName(name string) string {
 	nlist := strings.Split(name, ".")
 	return nlist[len(nlist)-1]
+}
+
+// GetFiledFullType
+// example
+// type Base struct {
+// 	  Member pack.pack2.ss
+// }
+// base := Base{}
+// name :=  GetFiledFullType(base.Member)
+// name == "pack.pack2.ss"
+func GetFiledFullType(src interface{}) string {
+	return reflect.TypeOf(src).Name()
+}
+
+func GetFieldInstanceByName(src interface{}, fieldName string) any {
+	s := reflect.ValueOf(src).FieldByName(fieldName).Elem().Interface()
+	return s
 }
 
 //ExecMethod
