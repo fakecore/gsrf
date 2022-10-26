@@ -1,17 +1,25 @@
+// Copyright 2022 The Go Authors. All rights reserved.
+// Use of this source code is governed by a MIT
+// license that can be found in the LICENSE file.
+
+// Package gsrf
+//The gsrf provides apis for user to get struct information and operating Exported member;
+//Be attention:Only support exported function and exported filed
+
 package gsrf
 
 import (
 	"errors"
 	"fmt"
 	"reflect"
-	"strings"
 )
 
 func GetStructName(src interface{}) (name string) {
 	return reflect.TypeOf(src).Elem().Name()
 }
 
-// StructFunctionList must pass the struct pointer to get all the methods of src struct
+// GetStructFunctionList
+//must pass the struct pointer to get all the methods of src struct
 func GetStructFunctionList(src interface{}) (fnList []string) {
 	typeList := reflect.TypeOf(src)
 	count := typeList.NumMethod()
@@ -21,36 +29,35 @@ func GetStructFunctionList(src interface{}) (fnList []string) {
 	return fnList
 }
 
-func GetStructPropertyList(src interface{}) (fnList []string) {
+func GetStructFiledList(src interface{}) (fieldList []string) {
 	typeList := reflect.TypeOf(src)
 	count := typeList.NumField()
 	for i := 0; i < count; i++ {
-		fnList = append(fnList, typeList.Field(i).Name)
+		fieldList = append(fieldList, typeList.Field(i).Name)
 	}
-	return fnList
+	return fieldList
 }
 
-func GetStructPropertyListWithType(src interface{}, propertyType string) (fieldList []string) {
+func GetStructFieldListWithType(src interface{}, fieldType string) (fieldList []string) {
 	typeList := reflect.TypeOf(src)
 	count := typeList.NumField()
 	for i := 0; i < count; i++ {
-		if getPureFiledName(typeList.Field(i).Type.String()) == propertyType {
+		if typeList.Field(i).Type.String() == fieldType {
 			fieldList = append(fieldList, typeList.Field(i).Name)
 		}
 	}
 	return fieldList
 }
-func getPureFiledName(name string) string {
-	nlist := strings.Split(name, ".")
-	return nlist[len(nlist)-1]
-}
 
-//GetInstanceFromFiledName
+//GetFieldInstanceByName
 //@param src: struct pointer
 //@param fieldName:member variable name
-func GetInstanceFromFiledName(src interface{}, fieldName string) any {
+func GetFieldInstanceByName(src interface{}, fieldName string) (any, error) {
+	if reflect.TypeOf(src).Kind() != reflect.Pointer {
+		return nil, errors.New("src must be instance rather than Pointer")
+	}
 	s := reflect.ValueOf(src).FieldByName(fieldName).Elem().Interface()
-	return s
+	return s, nil
 }
 
 //ExecMethod

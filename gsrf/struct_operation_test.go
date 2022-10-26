@@ -41,6 +41,14 @@ func TestOperation(t *testing.T) {
 	assert.Equal(t, err != nil, true)
 }
 
+func TestFunctionList(t *testing.T) {
+	fnList := GetStructFunctionList(TestF{})
+	for _, c := range fnList {
+		fmt.Println(c)
+	}
+
+}
+
 type SrcData struct {
 	v1   int
 	Test string
@@ -61,14 +69,14 @@ func TestStructCopy(t *testing.T) {
 	}
 }
 func TestGetStructFiled(t *testing.T) {
-	tList := GetStructPropertyList(TestF{})
+	tList := GetStructFiledList(TestF{})
 	targetPList := []string{"VInt", "VString"}
 	sort.Strings(tList)
 	sort.Strings(targetPList)
 	assert.Equal(t, targetPList, tList)
 }
 func TestGetStructFiledWithType(t *testing.T) {
-	tList := GetStructPropertyListWithType(TestF{}, reflect.TypeOf("").Name())
+	tList := GetStructFieldListWithType(TestF{}, reflect.TypeOf("").Name())
 	targetPList := []string{"VString"}
 	sort.Strings(tList)
 	sort.Strings(targetPList)
@@ -106,7 +114,7 @@ type FinalExec struct {
 }
 
 func TestExecMemberVariableMethod(t *testing.T) {
-	plist := GetStructPropertyListWithType(FinalExec{}, "CallBase")
+	plist := GetStructFieldListWithType(FinalExec{}, "CallBase")
 	var finalExec = FinalExec{}
 	finalExec.Fa = &FA{}
 	finalExec.Fb = &FB{}
@@ -116,7 +124,12 @@ func TestExecMemberVariableMethod(t *testing.T) {
 		t.Error(ers)
 	}
 	for _, c := range plist {
-		err := ExecMethod(GetInstanceFromFiledName(finalExec, c), "Hi")
+		instance, err := GetFieldInstanceByName(finalExec, c)
+		if err != nil {
+			t.Error(err)
+			continue
+		}
+		err = ExecMethod(instance, "Hi")
 		if err != nil {
 			t.Error(err)
 		}
