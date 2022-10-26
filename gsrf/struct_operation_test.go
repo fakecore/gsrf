@@ -120,6 +120,5 @@ func TestExecMemberVariableMethod(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		//GetInstanceFromFiledName(finalExec, c)
 	}
 }
